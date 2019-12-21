@@ -48,6 +48,7 @@ export default function linePlot(id, data, opts=defaults) {
   }
   canvas.width = ctx.devicePixelRatio * opts.width;
   canvas.height = ctx.devicePixelRatio * opts.height;
+  ctx.scale(ctx.devicePixelRatio, ctx.devicePixelRatio);
 
   ctx.drawingBox = BoxModel(ctx.w, ctx.h, opts);
 

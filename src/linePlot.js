@@ -1,5 +1,6 @@
 import {getPosition} from './utils.js';
 import BoxModel from './boxModel.js';
+import {updateScale} from "./setupScale.js";
 
 const defaults = {
   width: 1000,
@@ -76,16 +77,9 @@ function draw(ctx, pos={x: 0, y: 0}) {
   ctx.font = 'bold 16px Arial';
   ctx.save();
 
-  ctx.clearRect(0, 0, +ctx.w * ctx.deivePixelRatio, +ctx.h * ctx.deivePixelRatio);
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   let r = window.devicePixelRatio;
-  if (ctx.deivePixelRatio < r) {
-    ctx.deivePixelRatio = r;
-    ctx.canvas.width = ctx.w * r;
-    ctx.canvas.height = ctx.h * r;
-    ctx.restore();
-    ctx.scale(r, r,);
-    ctx.save();
-  }
+  updateScale(ctx);
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();

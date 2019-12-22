@@ -1,6 +1,7 @@
 import {getPosition} from './utils.js';
 import BoxModel from './boxModel.js';
 import {updateScale} from "./setupScale.js";
+import {setupScale} from "./setupScale";
 
 const defaults = {
   width: 1000,
@@ -51,7 +52,7 @@ export default function linePlot(id, data, opts=defaults) {
   canvas.height = ctx.devicePixelRatio * opts.height;
   ctx.scale(ctx.devicePixelRatio, ctx.devicePixelRatio);
 
-  ctx.drawingBox = BoxModel(ctx.w, ctx.h, opts);
+  ctx.drawingBox = new BoxModel(ctx.w, ctx.h, opts);
 
   draw(ctx);
 
@@ -69,6 +70,9 @@ export default function linePlot(id, data, opts=defaults) {
 }
 
 function draw(ctx, pos={x: 0, y: 0}) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  setupScale(ctx);
+
   ctx.strokeStyle = '#222';
   ctx.lineWidth = 2;
   ctx.fillStyle = '#222';
@@ -76,10 +80,6 @@ function draw(ctx, pos={x: 0, y: 0}) {
   ctx.textBaseline = 'middle';
   ctx.font = 'bold 16px Arial';
   ctx.save();
-
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  let r = window.devicePixelRatio;
-  updateScale(ctx);
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();

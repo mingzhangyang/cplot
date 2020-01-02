@@ -1,4 +1,4 @@
-import setupCanvas from '../setup';
+import {initializeCanvas} from '../setup';
 import {calcD} from './utils';
 
 const example = {
@@ -15,7 +15,7 @@ const example = {
 
 function compute_2(data=example, canvasID, opts={}) {
   let canvas = document.getElementById(canvasID);
-  let ctx = setupCanvas(canvas, opts);
+  let ctx = initializeCanvas(canvas, opts);
 
   let area_L = data.A.value;
   let area_s = data.B.value;

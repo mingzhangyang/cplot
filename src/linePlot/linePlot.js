@@ -1,25 +1,14 @@
 import {getPosition} from './utils.js';
-import BoxModel from './boxModel.js';
+import setupCanvas from '../setup.js';
 
-const defaults = {
-  width: 1000,
-  height: 600,
-};
-
-export default function linePlot(id, data, opts=defaults) {
+export default function linePlot(id, data, opts={}) {
   let canvas = document.getElementById(id);
   if (!canvas) {
     throw "an id of a canvas element is expected";
   }
-  let ctx = null;
-  try {
-    ctx = canvas.getContext("2d");
-  } catch (err) {
-    throw err;
-  }
-  if (!ctx) {
-    throw "canvas is not supported in the browser";
-  }
+
+  let ctx = setupCanvas(canvas, opts);
+
   if (!Array.isArray(data)) {
     throw "an array of number or objects expected"
   }
@@ -34,22 +23,8 @@ export default function linePlot(id, data, opts=defaults) {
   if (data[0].x === undefined || data[0].y === undefined) {
     throw "bad format, an array of {x: v1, y: v2} expected";
   }
+
   ctx.data = data;
-
-  ctx.opts = Object.assign({}, opts);
-  canvas.style.width = opts.width + 'px';
-  canvas.style.height = opts.height + 'px';
-  ctx.w = opts.width;
-  ctx.h = opts.height;
-
-  ctx.devicePixelRatio = window.devicePixelRatio;
-  if (ctx.devicePixelRatio < 1) {
-    ctx.devicePixelRatio = 1;
-  }
-  canvas.width = ctx.devicePixelRatio * opts.width;
-  canvas.height = ctx.devicePixelRatio * opts.height;
-
-  ctx.drawingBox = BoxModel(ctx.w, ctx.h, opts);
 
   draw(ctx);
 

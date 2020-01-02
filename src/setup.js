@@ -5,7 +5,7 @@ const defaults = {
   height: 600,
 };
 
-export default function setupCanvas(canvas, opts={}) {
+export function initializeCanvas(canvas, opts={}) {
   let ctx = null;
   try {
     ctx = canvas.getContext("2d");
@@ -31,4 +31,13 @@ export default function setupCanvas(canvas, opts={}) {
   ctx.drawingBox = BoxModel(ctx.w, ctx.h, opts);
 
   return ctx;
+}
+
+export function setupScale(ctx) {
+  ctx.w = ctx.canvas.clientWidth;
+  ctx.h = ctx.canvas.clientHeight;
+  ctx.devicePixelRatio = window.devicePixelRatio;
+  ctx.canvas.width = ctx.w * ctx.devicePixelRatio;
+  ctx.canvas.height = ctx.h * ctx.devicePixelRatio;
+  ctx.scale(ctx.devicePixelRatio, ctx.devicePixelRatio);
 }

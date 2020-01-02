@@ -1,5 +1,5 @@
 import {getPosition} from './utils.js';
-import setupCanvas from '../setup.js';
+import {initializeCanvas, setupScale} from '../setup.js';
 
 export default function linePlot(id, data, opts={}) {
   let canvas = document.getElementById(id);
@@ -7,7 +7,7 @@ export default function linePlot(id, data, opts={}) {
     throw "an id of a canvas element is expected";
   }
 
-  let ctx = setupCanvas(canvas, opts);
+  let ctx = initializeCanvas(canvas, opts);
 
   if (!Array.isArray(data)) {
     throw "an array of number or objects expected"
@@ -26,6 +26,7 @@ export default function linePlot(id, data, opts={}) {
 
   ctx.data = data;
 
+
   draw(ctx);
 
   canvas.addEventListener('mouseenter', evt => {
@@ -42,6 +43,10 @@ export default function linePlot(id, data, opts={}) {
 }
 
 function draw(ctx, pos={x: 0, y: 0}) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  setupScale(ctx);
+
   ctx.strokeStyle = '#222';
   ctx.lineWidth = 2;
   ctx.fillStyle = '#222';
@@ -49,17 +54,6 @@ function draw(ctx, pos={x: 0, y: 0}) {
   ctx.textBaseline = 'middle';
   ctx.font = 'bold 16px Arial';
   ctx.save();
-
-  ctx.clearRect(0, 0, +ctx.w * ctx.deivePixelRatio, +ctx.h * ctx.deivePixelRatio);
-  let r = window.devicePixelRatio;
-  if (ctx.deivePixelRatio < r) {
-    ctx.deivePixelRatio = r;
-    ctx.canvas.width = ctx.w * r;
-    ctx.canvas.height = ctx.h * r;
-    ctx.restore();
-    ctx.scale(r, r,);
-    ctx.save();
-  }
 
   ctx.translate(ctx.drawingBox.outerBoxOrigin.x, ctx.drawingBox.outerBoxOrigin.y);
   ctx.beginPath();

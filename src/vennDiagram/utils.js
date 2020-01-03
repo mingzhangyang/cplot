@@ -49,4 +49,5 @@ export function calcD(R, r, percentage) {
       return d;
     }
   }
+  throw "failed to calculate d";
 }

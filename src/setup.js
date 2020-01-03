@@ -1,8 +1,8 @@
-import BoxModel from './boxModel';
+import BoxModel from './boxModel.js';
 
 const defaults = {
-  width: 1000,
-  height: 600,
+  width: 800,
+  height: 800,
 };
 
 export function initializeCanvas(canvas, opts={}) {
@@ -16,19 +16,19 @@ export function initializeCanvas(canvas, opts={}) {
     throw "canvas is not supported in the browser";
   }
   ctx.opts = Object.assign({}, defaults, opts);
-  canvas.style.width = opts.width + 'px';
-  canvas.style.height = opts.height + 'px';
-  ctx.w = opts.width;
-  ctx.h = opts.height;
+  canvas.style.width = ctx.opts.width + 'px';
+  canvas.style.height = ctx.opts.height + 'px';
+  ctx.w = ctx.opts.width;
+  ctx.h = ctx.opts.height;
 
   ctx.devicePixelRatio = window.devicePixelRatio;
   if (ctx.devicePixelRatio < 1) {
     ctx.devicePixelRatio = 1;
   }
-  canvas.width = ctx.devicePixelRatio * opts.width;
-  canvas.height = ctx.devicePixelRatio * opts.height;
+  canvas.width = ctx.devicePixelRatio * ctx.opts.width;
+  canvas.height = ctx.devicePixelRatio * ctx.opts.height;
 
-  ctx.drawingBox = BoxModel(ctx.w, ctx.h, opts);
+  ctx.drawingBox = new BoxModel(ctx.w, ctx.h, ctx.opts);
 
   return ctx;
 }

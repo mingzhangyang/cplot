@@ -1,0 +1,247 @@
+
+/**
+* main section logic
+ */
+
+section.main {
+    padding-bottom: 30px;
+}
+
+section.main.live div.image-container {
+    display: block;
+}
+
+section.main.gallery div.image-container {
+    display: none;
+}
+
+section.main.live div.gallery-frame {
+    display: none;
+}
+
+section.main.gallery div.gallery-frame {
+    display: flex;
+}
+
+
+/**
+*  tab switch controller
+ */
+
+div.switch-controller {
+    height: 60px;
+    border-bottom: 2px solid #b0dab9;
+    width: 90%;
+    min-width: 960px;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+span.switcher {
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 8px 8px 0 0;
+    margin-left: 20px;
+    margin-top: 22px;
+    padding: 0 12px;
+    background-color: floralwhite;
+    cursor: pointer;
+}
+
+div.switch-controller.contact span.switcher.contact-map {
+    border: 2px solid #b0dab9;
+    border-bottom: 2px solid floralwhite;
+}
+
+div.switch-controller.network span.switcher.network-graph {
+    border: 2px solid #b0dab9;
+    border-bottom: 2px solid floralwhite;
+}
+
+/**
+* data selector
+ */
+
+.data-selector {
+    position: absolute;
+    top: 12px;
+    left: 6%;
+}
+
+/**
+* type selector
+ */
+
+div.type-selector {
+    width: 80%;
+    min-width: 756px;
+    height: 42px;
+    line-height: 42px;
+    margin: auto;
+    text-align: center;
+}
+
+span.type-option {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.hidden {
+    transform-origin: 100% 100%;
+    transform: scaleX(.01);
+    opacity: 0;
+}
+
+/**
+* image container
+ */
+
+section.main div.image-container {
+    margin: 10px auto;
+    position: relative;
+}
+
+canvas {
+    display: block;
+    width: 800px;
+    height: 600px;
+    margin: auto;
+}
+
+svg {
+    display: none;
+    margin: auto;
+}
+
+
+
+/**
+* gallery-frame
+ */
+
+section.main div.gallery-frame {
+    width: 90%;
+    min-width: 960px;
+    min-height: 600px;
+    margin: -2px auto;
+    padding: 42px 0;
+    border: 2px solid #b0dab9;
+    border-top: 0 solid transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+div.gallery-frame div.arrow {
+    display: block;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+div.gallery-frame div.arrow:hover {
+    background-color: coral;
+}
+
+div.gallery-frame div.arrow::before {
+    content: "";
+    box-sizing: border-box;
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 11px;
+    transform: rotate(45deg);
+}
+
+div.gallery-frame div.arrow.left::before {
+    border-left: 4px solid coral;
+    border-bottom: 4px solid coral;
+    left: 14px;
+}
+
+div.gallery-frame div.arrow.right::before {
+    border-right: 4px solid coral;
+    border-top: 4px solid coral;
+    right: 14px;
+}
+
+div.gallery-frame div.arrow:hover::before {
+    border-color: white;
+}
+
+div.gallery-image {
+    width: 800px;
+    min-height: 600px;
+    border: 1px solid #eeeeee;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+div.gallery-frame div.gallery-image img {
+    display: block;
+    transition: left 1.2s, opacity .8s;
+    width: 60%;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    left: 20%;
+    opacity: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 2px -2px 12px #888888;
+}
+
+div.gallery-frame div.gallery-image img.current {
+    opacity: 1;
+}
+
+div.gallery-frame div.gallery-image img.gone {
+    left: -200%;
+}
+
+
+#dots-wrapper {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: translateY(-100%);
+}
+
+#dots-wrapper .dot {
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    border-radius: 50%;
+    background-color: #888888;
+    cursor: pointer;
+}
+
+#dots-wrapper .dot.active {
+    background-color: coral;
+}
+
+#image-title {
+    position: absolute;
+    bottom: 0;
+}
+
+#download-handler {
+    display: none;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+}

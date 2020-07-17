@@ -1,4 +1,4 @@
-import {initializeCanvas} from '../setup.js';
+import {initializeCanvas} from '../utils/setup.js';
 import {calcD} from './utils.js';
 
 const example = {

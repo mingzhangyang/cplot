@@ -1,5 +1,5 @@
 import {getPosition} from './utils.js';
-import {initializeCanvas, setupScale} from '../setup.js';
+import {initializeCanvas, setupScale} from '../utils/setup.js';
 
 export default function linePlot(id, data, opts={}) {
   let canvas = document.getElementById(id);

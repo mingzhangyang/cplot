@@ -1,20 +1,5 @@
 const base = '../figures/';
-const imageNames = [
-  "common_contacts.jpg",
-  "common_labels_.png",
-  "common_labels_categ.png",
-  "common_values_.png",
-  "6M0J_all_contacts.png",
-  "6M0J_contact.png",
-  "2AJF_all_contacts.png",
-  "6M0J_H-Bonds.png",
-  "Team 2A.png",
-  "Contact2.png",
-  "2AJF_H-Bonds.png",
-  "Contact1.png",
-  "Contact_Combined.png",
-  "2AJF_contact.png",
-].sort();
+const imageNames = [].sort();
 
 export default function setupImgSliding() {
   let c = document.getElementById('gallery-image');

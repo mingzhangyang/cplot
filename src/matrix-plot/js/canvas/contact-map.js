@@ -1,7 +1,7 @@
 import {initializeCanvas, setupScale} from "./setup.js";
 import config from "../utils/config.js";
-import getColor from "../utils/colors.js";
-import {randomInt} from "../utils/misc.js";
+import {colors} from "../../../utils/colors.js";
+import {randomInt} from "../../../utils/misc.js";
 
 /**
  * draw contact map
@@ -16,7 +16,9 @@ import {randomInt} from "../utils/misc.js";
  *     ...
  *   }
  * }
- * @options: custom option
+ * @param infoPanelId : id of the info panel
+ * @param typeFilterId : id of the type selector
+ * @param options : for custom configuration of the canvas
  */
 export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, infoPanelId, typeFilterId, options={}) {
   let opt = Object.assign({}, config, options);
@@ -193,11 +195,11 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
       let o = data.data[`${data.x[i]}-${data.y[j]}`];
       if (ctx.selectedTypes.includes(o.type) && o.value) {
         if (flag && i === m && j === n) {
-          ctx.fillStyle = getColor(o.type, true);
+          ctx.fillStyle = colors.getColor(o.type, 1);
           ctx.shadowColor = ctx.fillStyle;
           ctx.shadowBlur = 8;
         } else {
-          ctx.fillStyle = getColor(o.type, false);
+          ctx.fillStyle = colors.getColor(o.type, .5);
         }
         ctx.beginPath();
         ctx.arc((i + 1) * gridWidth, (j + 1) * gridWidth, opt.circleRadius, 0, Math.PI * 2);

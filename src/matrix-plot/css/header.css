@@ -15,11 +15,10 @@ section.header {
     position: relative;
 }
 
-#logo {
-    width: 240px;
-    height: auto;
-    margin-left: 42px;
-    margin-top: 36px;
+section.header span.title {
+    font-size: 36px;
+    line-height: 120px;
+    margin-left: 36px;
 }
 
 section.header div.menu-bar {

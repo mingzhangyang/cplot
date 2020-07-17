@@ -6,7 +6,7 @@ import {randomInt} from "../../../utils/misc.js";
 /**
  * draw contact map
  * @param canvas
- * @param data, i.e. {
+ * @param data : object, i.e. {
  *   x: ['a', 'b', 'c'],
  *   y: ['d', 'e', 'f'],
  *   data: {
@@ -16,9 +16,9 @@ import {randomInt} from "../../../utils/misc.js";
  *     ...
  *   }
  * }
- * @param infoPanelId : id of the info panel
- * @param typeFilterId : id of the type selector
- * @param options : for custom configuration of the canvas
+ * @param infoPanelId : string : of the info panel
+ * @param typeFilterId : string : of the type selector
+ * @param options : object : for custom configuration of the canvas
  */
 export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, infoPanelId, typeFilterId, options={}) {
   let opt = Object.assign({}, config, options);
@@ -214,6 +214,7 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
 
 /**
  * get the x and y index of the highlighted circle, if no highlighted, then [-1, -1]
+ * @param opt: canvas configurations
  * @param w: the width of the content area (grids)
  * @param h: the height of the content area (grids)
  * @param pos

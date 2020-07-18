@@ -199,7 +199,7 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
           ctx.shadowColor = ctx.fillStyle;
           ctx.shadowBlur = 8;
         } else {
-          ctx.fillStyle = colors.getColor(o.type, .5);
+          ctx.fillStyle = colors.getColor(o.type, .72);
         }
         ctx.beginPath();
         ctx.arc((i + 1) * gridWidth, (j + 1) * gridWidth, opt.circleRadius, 0, Math.PI * 2);

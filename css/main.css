@@ -102,6 +102,7 @@ span.type-option {
 section.main div.image-container {
     margin: 10px auto;
     position: relative;
+    padding-top: 42px;
 }
 
 canvas {
@@ -109,6 +110,9 @@ canvas {
     width: 800px;
     height: 600px;
     margin: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 2px 2px 12px floralwhite;
 }
 
 svg {

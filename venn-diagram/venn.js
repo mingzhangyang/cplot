@@ -10,7 +10,7 @@ const example = {
     name: "B",
     value: 200,
   },
-  shared: 100
+  shared: 60
 };
 
 class Circle {

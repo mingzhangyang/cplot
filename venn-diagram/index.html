@@ -5,12 +5,11 @@
     <title>cplot</title>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/info-panel.css">
 </head>
 <body>
 <section class="header no-print">
     <span class="title">
-        Matrix View
+        Venn Diagram
     </span>
     <div class="menu-bar">
         <div class="menu">
@@ -40,35 +39,14 @@
     </div>
 </section>
 <section class="main live">
-    <div class="switch-controller contact no-print">
-        <span class="switcher contact-map">Contact map</span>
-        <span class="switcher network-graph">Network graph</span>
-    </div>
     <div class="image-container">
         <div class="data-selector">
             <label for="data">Choose data to show:</label>
-            <select name="cars" id="data">
-                <option value="sample-data" selected>fake sample data</option>
-                <option value="common-values">Common Values</option>
-                <option value="common-labels">Common Labels</option>
+            <select name="data" id="data">
+                <option value="sample-data" selected>data-set-1</option>
+                <option value="common-values">data-set-2</option>
+                <option value="common-labels">data-set-3</option>
             </select>
-        </div>
-        <div class="type-selector" id="type-selector">
-            <span class="type-option">Type:</span>
-            <span id="type-options">
-                <span class="type-option">
-                    <input type="checkbox" id="type-A" value="A"><label for="type-A">A</label>
-                </span>
-                <span class="type-option">
-                    <input type="checkbox" id="type-B" value="B"><label for="type-B">B</label>
-                </span>
-                <span class="type-option">
-                    <input type="checkbox" id="type-C" value="C"><label for="type-C">C</label>
-                </span>
-                <span class="type-option">
-                    <input type="checkbox" id="type-D" value="D"><label for="type-D">D</label>
-                </span>
-            </span>
         </div>
         <canvas id="canvas"></canvas>
         <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -81,28 +59,10 @@
         </div>
         <div class="arrow right" id="to-right"></div>
     </div>
-    <div class="info-panel" id="info-panel">
-        <div class="row">
-            <span class="prop">x:</span>
-            <span class="value"></span>
-        </div>
-        <div class="row">
-            <span class="prop">y:</span>
-            <span class="value"></span>
-        </div>
-        <div class="row">
-            <span class="prop">type:</span>
-            <span class="value"></span>
-        </div>
-        <div class="row">
-            <span class="prop">value:</span>
-            <span class="value"></span>
-        </div>
-    </div>
 </section>
 <section class="footer no-print">
     <a href="" id="download-handler" download="you-name-it"></a>
 </section>
-<script type="module" src="js/index.js"></script>
+<script type="module" src="index.js"></script>
 </body>
 </html>

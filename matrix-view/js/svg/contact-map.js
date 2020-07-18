@@ -80,7 +80,7 @@ export default function contactMapSVG(id, data={x: [], y: [], data: {}}, setting
         circle.setAttributeNS(null, 'cx', (i + 1) * gridWidth + '');
         circle.setAttributeNS(null, 'cy', (j + 1) * gridWidth + '');
         circle.setAttributeNS(null, 'r', opt.circleRadius);
-        circle.setAttributeNS(null, 'fill', colors.getColor(o.type));
+        circle.setAttributeNS(null, 'fill', colors.getColor(o.type, .72));
       }
     }
   }

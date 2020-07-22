@@ -1,0 +1,87 @@
+/**
+*  tab switch controller
+ */
+
+div.switch-controller {
+    height: 60px;
+    border-bottom: 2px solid #b0dab9;
+    width: 90%;
+    min-width: 960px;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+span.switcher {
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 8px 8px 0 0;
+    margin-left: 20px;
+    margin-top: 22px;
+    padding: 0 12px;
+    background-color: floralwhite;
+    cursor: pointer;
+}
+
+div.switch-controller.contact span.switcher.contact-map {
+    border: 2px solid #b0dab9;
+    border-bottom: 2px solid floralwhite;
+}
+
+div.switch-controller.network span.switcher.network-graph {
+    border: 2px solid #b0dab9;
+    border-bottom: 2px solid floralwhite;
+}
+
+div.switch-controller.contact ~ div.image-container.network-graph {
+    display: none;
+}
+
+div.switch-controller.network ~ div.image-container.contact-map {
+    display: none;
+}
+
+/**
+* data selector
+ */
+
+.data-selector {
+    width: 90%;
+    min-width: 960px;
+    position: relative;
+    height: 42px;
+    left: 42px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.data-selector select {
+    margin-left: 16px;
+}
+
+/**
+* type selector
+ */
+
+div.type-selector {
+    width: 80%;
+    min-width: 756px;
+    height: 42px;
+    line-height: 42px;
+    margin: auto;
+    text-align: center;
+}
+
+span.type-option {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.hidden {
+    transform-origin: 100% 100%;
+    transform: scaleX(.01);
+    opacity: 0;
+}

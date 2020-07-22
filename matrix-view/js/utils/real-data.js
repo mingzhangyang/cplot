@@ -985,7 +985,7 @@ function transform(obj, src='labels') {
 }
 
 let labels = transform(commonLabels);
-let values = transform(commonValues);
+let values = transform(commonValues, 'values');
 
 export {
   labels,

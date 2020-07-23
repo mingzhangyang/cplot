@@ -24,7 +24,7 @@ class Point {
   }
 }
 
-class Segment {
+class Position {
   constructor(p1, p2, err = .005) {
     this.start = p1;
     this.end = p2;
@@ -53,13 +53,57 @@ class Segment {
 
   contains(p) {
     if (this.start.x === this.end.x) {
-      return p.x - this.start.x < this.error;
+      return Math.abs(p.x - this.start.x) < this.error;
     }
     if (this.start.y === this.end.y) {
-      return p.y - this.start.y < this.error;
+      return Math.abs(p.y - this.start.y) < this.error;
     }
 
+    let k = (this.end.y - this.start.y) / (this.end.x - this.start.x);
+    let x = (k * this.start.x + p.x / k - this.start.y + p.y) / (k + 1 / k);
+    let y = k * x - k * this.start.x + this.start.y;
+
     return ((p.x >= this.start.x && p.x <= this.end.x) || (p.x < this.start.x && p.x > this.end.x))
-      && (p.y - this.start.y) / (p.x - this.start.x) - (this.end.y - p.y) / (this.end.x - p.x) < this.error;
+      && Math.sqrt((p.x - x) ^ 2 + (p.y -y) ^ 2) < this.error;
   }
+}
+
+class Triangle{
+  constructor(p1, p2, p3) {
+    this.vertexes = [p1, p2, p3];
+  }
+
+  contains(p) {
+    for (let i = 0; i < 3; i++) {
+      let j = (i + 1) % 3;
+      let k = (i + 2) % 3;
+      let t = onSameSide([this.vertexes[i].x, this.vertexes[i].y],
+        [this.vertexes[j].x, this.vertexes[j].y],
+        [this.vertexes[k].x, this.vertexes[k].y],
+        [p.x, p.y]);
+      if (t === -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+/**
+ * Determine whether p3 and p4 are on the same side of the segment of p1-p2
+ * @param p1
+ * @param p2
+ * @param p3
+ * @param p4
+ * returns -1 (not on the same side) | 0 (at least one is on the segment) | 1 (on the same side)
+ */
+function onSameSide(p1=[0,0], p2=[0,0], p3=[0,0], p4=[0,0]) {
+  let angle0 = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+  let angle1 = Math.atan2(p3[1] - p1[1], p3[0] - p1[0]);
+  let angle2 = Math.atan2(p4[1] - p1[1], p4[0] - p1[0]);
+  let product = (angle1 - angle0) * (angle2 - angle0);
+  if (product === 0) {
+    return 0;
+  }
+  return product > 0 ? 1 : -1;
 }

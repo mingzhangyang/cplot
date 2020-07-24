@@ -103,8 +103,8 @@ export default function drawNetwork(canvas, data, typeFilterId) {
 
   canvas.addEventListener('mousemove', evt => {
     if (ctx.draggedTarget) {
-      ctx.draggedTarget.coordinates.x += evt.movementX;
-      ctx.draggedTarget.coordinates.y += evt.movementY;
+      ctx.draggedTarget.coordinates.x += evt.movementX  / ctx.devicePixelRatio;
+      ctx.draggedTarget.coordinates.y += evt.movementY / ctx.devicePixelRatio;
       requestAnimationFrame(() => {
         updateNetworkGraph(ctx, getPositionOnCanvas(canvas, evt));
       });

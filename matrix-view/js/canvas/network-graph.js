@@ -1,6 +1,7 @@
 import {initializeCanvas} from "./setup.js";
 import {colors} from "../../../utils/colors.js";
 import createTypeOptions from "./create-type-options.js";
+import {onLineOrNot} from "../../../utils/position.js";
 
 const minHeight = 200;
 
@@ -141,7 +142,7 @@ export default function drawNetwork(canvas, data, typeFilterId) {
   });
 }
 
-function updateNetworkGraph(ctx, pos = {x: 0, y: 0}, required = false) {
+function updateNetworkGraph(ctx, pos = {x: 0, y: 0}) {
   let elements = ctx.elements;
   ctx.clearRect(0, 0, ctx.w, ctx.h);
   ctx.lineWidth = 2;
@@ -234,51 +235,6 @@ function _drawCircles(ctx, obj, group = "") {
     ctx.fillText(c.name, c.coordinates.x, c.coordinates.y);
     ctx.restore();
   }
-}
-
-/**
- * This is to determine whether a point p3 is on the segment starts from p1 and ends with p2
- * @param p1, start point of the segment
- * @param p2, end point of the segment
- * @param p3, the point to be examined
- * @param d, the largest distance to the segment within which a point can be accepted as on the line
- */
-function onLineOrNot(p1 = [0, 0], p2 = [0, 0], p3 = [0, 0], d = 2) {
-  if (p1[0] === p2[0]) {
-    return ((p3[1] >= p1[1] && p3[1] <= p2[1]) || (p3[1] <= p1[1] && p3[1] >= p2[1])) && Math.abs(p3[0] - p1[0]) <= d;
-  }
-  if (p1[1] === p2[1]) {
-    return ((p3[0] >= p1[0] && p3[0] <= p2[0]) || (p3[0] <= p1[0] && p3[0] >= p2[0])) && Math.abs(p3[1] - p1[1]) <= d;
-  }
-  let k = (p2[1] - p1[1]) / (p2[0] - p1[0]);
-  let x = (p3[1] - p1[1] + k * p1[0] + p3[0] / k) / (k + 1 / k);
-  let y = k * (x - p1[0]) + p1[1];
-
-  return ((x >= p1[0] && x <= p2[0]) || (x <= p1[0] && x >= p2[0])) && (Math.sqrt((p3[0] - x) ** 2 + (p3[1] - y) ** 2) < d);
-}
-
-/**
- * This method use coordinates system transformation
- * @param p1
- * @param p2
- * @param p3
- * @param d
- */
-function onLineOrNot2(p1 = [0, 0], p2 = [0, 0], p3 = [0, 0], d = 2) {
-  // make sure p1 is on the left of p2
-  if (p1[0] > p2[0]) {
-    [p1, p2] = [p2, p1];
-  }
-  // translate(-p1[0], -p1[1]), then p1 -> [0, 0], p2 -> [p2[0]-p1[0], p2[1]-p1[1]], p3 -> [p3[0]-p1[0], p3[1]-p1[1]]
-  let alpha = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
-  let beta = Math.atan2(p3[1] - p1[1], p3[0] - p1[0]);
-  // rotate(-alpha) to make p2 is on x-axis, then tha angle of p3 with the new x-axis is beta - alpha
-  // now p2 in the new coordinates system is [Math.sqrt((p2[0]-p1[0]) ** 2 + (p2[1]-p1[1]) ** 2), 0]
-  let m = Math.sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2);
-  // now p3 in the new coordinates system is [|p1p3| * cos(beta-alpha), |p1p3| * sin(beta-alpha)]
-  let n = Math.sqrt((p3[0] - p1[0]) ** 2 + (p3[1] - p1[1]) ** 2);
-  return n * Math.cos(beta - alpha) >= 0 && n * Math.cos(beta - alpha) <= m
-    && Math.abs(n * Math.sin(beta - alpha)) <= d;
 }
 
 function getPositionOnCanvas(canvas, evt) {

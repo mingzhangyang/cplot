@@ -10,7 +10,7 @@ for (let c1 of s) {
       x: c1,
       y: c2,
       type: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)],
-      value: Math.random() > .89 ? 1 : 0,
+      value: Math.random() > .92 ? 1 : 0,
     }
   }
 }

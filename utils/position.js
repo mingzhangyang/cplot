@@ -5,7 +5,7 @@ class Point {
   }
 
   static distanceOfTwoPoints(p1, p2) {
-    return Math.sqrt((p1.x - p2.x) ^ 2 + (p1.y - p2.y) ^ 2);
+    return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
   }
 
   distanceToSegment(seg) {
@@ -20,7 +20,7 @@ class Point {
     let x = (this.y - seg.start.y + k * seg.start.x + this.x / k) / (k + 1 / k);
     let y = k * x - k * seg.start.x + seg.start.y;
 
-    return Math.sqrt((this.x - x) ^ 2 + (this.y - y) ^ 2);
+    return Math.sqrt((this.x - x) ** 2 + (this.y - y) ** 2);
   }
 }
 
@@ -64,7 +64,7 @@ class Position {
     let y = k * x - k * this.start.x + this.start.y;
 
     return ((p.x >= this.start.x && p.x <= this.end.x) || (p.x < this.start.x && p.x > this.end.x))
-      && Math.sqrt((p.x - x) ^ 2 + (p.y -y) ^ 2) < this.error;
+      && Math.sqrt((p.x - x) ** 2 + (p.y -y) ** 2) < this.error;
   }
 }
 
@@ -87,6 +87,10 @@ class Triangle{
     }
     return true;
   }
+}
+
+class Polygon{
+
 }
 
 /**

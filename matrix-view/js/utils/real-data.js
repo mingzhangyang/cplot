@@ -955,7 +955,7 @@ function transform(obj, src='labels') {
           };
         } else {
           res.data[`${key}-${k}`] = {
-            type: v,
+            type: v + '',
             value: 1,
             x: key,
             y: k,
@@ -971,7 +971,7 @@ function transform(obj, src='labels') {
           };
         } else {
           res.data[`${key}-${k}`] = {
-            type: v,
+            type: v + '',
             value: 1,
             x: key,
             y: k,

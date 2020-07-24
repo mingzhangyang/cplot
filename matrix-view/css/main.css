@@ -52,7 +52,7 @@ div.switch-controller.network ~ div.image-container.contact-map {
     min-width: 960px;
     position: relative;
     height: 42px;
-    left: 42px;
+    left: 8%;
     display: flex;
     flex-direction: row;
     align-items: flex-end;

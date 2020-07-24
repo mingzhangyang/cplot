@@ -94,24 +94,45 @@ export default function drawNetwork(canvas, data, typeFilterId) {
     let pos = getPositionOnCanvas(canvas, evt);
     let target = getDragged(ctx.elements, pos);
     if (target) {
+      // ctx.pos = pos; // for verifying movementX
       ctx.draggedTarget = target;
+      ctx.draggedTarget.offsetFromCenter = {
+        offsetX: ctx.draggedTarget.coordinates.x - pos.x,
+        offsetY: ctx.draggedTarget.coordinates.y - pos.y,
+      }
     }
     requestAnimationFrame(() => {
-      updateNetworkGraph(ctx, getPositionOnCanvas(canvas, evt));
+      updateNetworkGraph(ctx, pos);
     });
   });
 
   canvas.addEventListener('mousemove', evt => {
     if (ctx.draggedTarget) {
-      ctx.draggedTarget.coordinates.x += evt.movementX  / ctx.devicePixelRatio;
-      ctx.draggedTarget.coordinates.y += evt.movementY / ctx.devicePixelRatio;
+      // ctx.draggedTarget.coordinates.x += evt.movementX  / ctx.devicePixelRatio;
+      // ctx.draggedTarget.coordinates.y += evt.movementY / ctx.devicePixelRatio;
+      // the following way to reset draggedTarget's coordinates is better than the above one
+      // 1. no float coordinates introduced by dividing
+      // 2. hard to understand why it is necessary to divide movementX and movementY by devicePixelRatio
+      let pos = getPositionOnCanvas(canvas, evt);
+      // console.log(pos.x - ctx.pos.x, evt.movementX); // for verifying whether the two are equal
+      // ctx.pos = pos;
+      ctx.draggedTarget.coordinates.x = pos.x + ctx.draggedTarget.offsetFromCenter.offsetX;
+      ctx.draggedTarget.coordinates.y = pos.y + ctx.draggedTarget.offsetFromCenter.offsetY;
       requestAnimationFrame(() => {
-        updateNetworkGraph(ctx, getPositionOnCanvas(canvas, evt));
+        updateNetworkGraph(ctx, pos);
       });
     }
   })
 
-  canvas.addEventListener('mouseup', evt => {
+  canvas.addEventListener('mouseup', () => {
+    ctx.draggedTarget = null;
+    removeHighlights(ctx.elements);
+    requestAnimationFrame(() => {
+      updateNetworkGraph(ctx);
+    });
+  });
+
+  canvas.addEventListener('mouseout', () => {
     ctx.draggedTarget = null;
     removeHighlights(ctx.elements);
     requestAnimationFrame(() => {

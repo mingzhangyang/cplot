@@ -73,7 +73,12 @@ function testPosition() {
     c.pass = r === c.expected;
     let p = zone.appendChild(document.createElement('p'));
     p.classList.add(`test-pass-${c.pass}`);
-    p.innerText = `#${i++}, input: ${c.input}, expected: ${c.expected}, return: ${r}, pass: ${c.pass}`;
+    let span = p.appendChild(document.createElement('span'));
+    span.classList.add('row-number');
+    span.innerText = `#${i++}`;
+    span = p.appendChild(document.createElement('span'));
+    span.classList.add('row-content');
+    span.innerText = `input: ${c.input}, expected: ${c.expected}, return: ${r}, pass: ${c.pass}`;
   }
 }
 

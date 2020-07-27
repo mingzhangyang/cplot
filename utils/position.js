@@ -1,4 +1,4 @@
-class Point {
+export class Point {
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
@@ -24,7 +24,7 @@ class Point {
   }
 }
 
-class Position {
+export class Segment {
   constructor(p1, p2, err = .005) {
     this.start = p1;
     this.end = p2;
@@ -68,7 +68,7 @@ class Position {
   }
 }
 
-class Triangle{
+export class Triangle{
   constructor(p1, p2, p3) {
     this.vertexes = [p1, p2, p3];
   }
@@ -102,14 +102,25 @@ class Polygon{
  * returns -1 (not on the same side) | 0 (at least one is on the segment) | 1 (on the same side)
  */
 function onSameSide(p1=[0,0], p2=[0,0], p3=[0,0], p4=[0,0]) {
-  let angle0 = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
-  let angle1 = Math.atan2(p3[1] - p1[1], p3[0] - p1[0]);
-  let angle2 = Math.atan2(p4[1] - p1[1], p4[0] - p1[0]);
-  let product = (angle1 - angle0) * (angle2 - angle0);
-  if (product === 0) {
-    return 0;
+  if (p1[0] === p2[0]) {
+    let m = p3[0] - p1[0];
+    let n = p4[0] - p1[0];
+    if (m * n === 0) {
+      return 0;
+    }
+    return m * n > 0 ? 1: -1;
   }
-  return product > 0 ? 1 : -1;
+  let k = (p2[1] - p1[1]) / (p2[0] - p1[0]);
+  let b0 = p2[1] - k * p2[0];
+  let b1 = p3[1] - k * p3[0];
+  let b2 = p4[1] - k * p4[0];
+  let p = b1 - b0;
+  let q = b2 - b0;
+  if (p * q === 0) {
+    return 0;
+  } else {
+    return p * q > 0 ? 1 : -1;
+  }
 }
 
 /**

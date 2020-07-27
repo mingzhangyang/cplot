@@ -1,7 +1,7 @@
 import {initializeCanvas} from "./setup.js";
 import {colors} from "../../../utils/colors.js";
 import createTypeOptions from "./create-type-options.js";
-import {onLineOrNot} from "../../../utils/position.js";
+import {onLineOrNot} from "../../../utils/shape.js";
 
 const minHeight = 200;
 

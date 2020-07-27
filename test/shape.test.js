@@ -1,4 +1,4 @@
-import {Point, Triangle} from "../utils/position.js";
+import {Point, Triangle} from "../utils/shape.js";
 
 const p1 = new Point(1, 1);
 const p2 = new Point(5, 5);

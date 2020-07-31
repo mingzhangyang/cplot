@@ -75,8 +75,8 @@ function computePositions(data, width, height, radius = 20, padding = 10, margin
 }
 
 export default function drawNetwork(canvas, data, typeFilterId) {
-  let computed = computePositions(data, 800, 600);
-  let ctx = initializeCanvas(canvas, {width: computed.width, height: computed.height});
+  const computed = computePositions(data, 800, 600);
+  const ctx = initializeCanvas(canvas, {width: computed.width, height: computed.height});
   ctx.elements = computed.elements;
   ctx.selectedTypes = [...computed.elements.types].filter(d => d !== '').sort();
   ctx.w = computed.width;
@@ -92,8 +92,8 @@ export default function drawNetwork(canvas, data, typeFilterId) {
   });
 
   canvas.addEventListener('mousedown', evt => {
-    let pos = getPositionOnCanvas(canvas, evt);
-    let target = getDragged(ctx.elements, pos);
+    const pos = getPositionOnCanvas(canvas, evt);
+    const target = getDragged(ctx.elements, pos);
     if (target) {
       // ctx.pos = pos; // for verifying movementX
       ctx.draggedTarget = target;
@@ -114,7 +114,7 @@ export default function drawNetwork(canvas, data, typeFilterId) {
       // the following way to reset draggedTarget's coordinates is better than the above one
       // 1. no float coordinates introduced by dividing
       // 2. hard to understand why it is necessary to divide movementX and movementY by devicePixelRatio
-      let pos = getPositionOnCanvas(canvas, evt);
+      const pos = getPositionOnCanvas(canvas, evt);
       // console.log(pos.x - ctx.pos.x, evt.movementX); // for verifying whether the two are equal
       // ctx.pos = pos;
       ctx.draggedTarget.coordinates.x = pos.x + ctx.draggedTarget.offsetFromCenter.offsetX;
@@ -143,7 +143,7 @@ export default function drawNetwork(canvas, data, typeFilterId) {
 }
 
 function updateNetworkGraph(ctx, pos = {x: 0, y: 0}) {
-  let elements = ctx.elements;
+  const elements = ctx.elements;
   ctx.clearRect(0, 0, ctx.w, ctx.h);
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
@@ -153,15 +153,15 @@ function updateNetworkGraph(ctx, pos = {x: 0, y: 0}) {
   // determine what to highlight
   if (ctx.draggedTarget) {
     ctx.draggedTarget.highlight = true;
-    let group = ctx.draggedTarget.group === 'upper' ? 'lower' : 'upper';
-    for (let c of ctx.draggedTarget.connections) {
+    const group = ctx.draggedTarget.group === 'upper' ? 'lower' : 'upper';
+    for (const c of ctx.draggedTarget.connections) {
       if (ctx.selectedTypes.includes(c.type)) {
         elements[group].elems[c.name].highlight = true;
       }
     }
 
-    for (let key of elements.upper.keys) {
-      let c = elements.upper.elems[key];
+    for (const key of elements.upper.keys) {
+      const c = elements.upper.elems[key];
       for (let p of c.connections) {
         if (ctx.selectedTypes.includes(p.type)) {
           ctx.beginPath();
@@ -184,8 +184,8 @@ function updateNetworkGraph(ctx, pos = {x: 0, y: 0}) {
     }
   } else {
     for (let key of elements.upper.keys) {
-      let c = elements.upper.elems[key];
-      for (let p of c.connections) {
+      const c = elements.upper.elems[key];
+      for (const p of c.connections) {
         if (ctx.selectedTypes.includes(p.type)) {
           ctx.save();
           ctx.strokeStyle = colors.getColor(p.type, .78);
@@ -214,8 +214,8 @@ function updateNetworkGraph(ctx, pos = {x: 0, y: 0}) {
 }
 
 function _drawCircles(ctx, obj, group = "") {
-  for (let key of obj.keys) {
-    let c = obj.elems[key];
+  for (const key of obj.keys) {
+    const c = obj.elems[key];
     ctx.beginPath();
     ctx.fillStyle = colors.getColor(group, .88);
     if (c.highlight) {
@@ -238,7 +238,7 @@ function _drawCircles(ctx, obj, group = "") {
 }
 
 function getPositionOnCanvas(canvas, evt) {
-  let {top, left} = canvas.getBoundingClientRect();
+  const {top, left} = canvas.getBoundingClientRect();
   return {
     x: evt.x - left,
     y: evt.y - top,
@@ -246,15 +246,15 @@ function getPositionOnCanvas(canvas, evt) {
 }
 
 function getDragged(elements, pos) {
-  for (let key of elements.upper.keys) {
-    let c = elements.upper.elems[key];
+  for (const key of elements.upper.keys) {
+    const c = elements.upper.elems[key];
     if (Math.sqrt((c.coordinates.x - pos.x) ** 2 + (c.coordinates.y - pos.y) ** 2) < c.radius) {
       c.group = 'upper';
       return c;
     }
   }
-  for (let key of elements.lower.keys) {
-    let c = elements.lower.elems[key];
+  for (const key of elements.lower.keys) {
+    const c = elements.lower.elems[key];
     if (Math.sqrt((c.coordinates.x - pos.x) ** 2 + (c.coordinates.y - pos.y) ** 2) < c.radius) {
       c.group = 'lower';
       return c;
@@ -264,8 +264,8 @@ function getDragged(elements, pos) {
 }
 
 function removeHighlights(elements) {
-  for (let pos of ['upper', 'lower']) {
-    for (let key of elements[pos].keys) {
+  for (const pos of ['upper', 'lower']) {
+    for (const key of elements[pos].keys) {
       elements[pos].elems[key].highlight = false;
     }
   }

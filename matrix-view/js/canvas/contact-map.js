@@ -21,15 +21,15 @@ import createTypeOptions from "./create-type-options.js";
  * @param options : object : for custom configuration of the canvas
  */
 export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, infoPanelId, typeFilterId, options={}) {
-  let opt = Object.assign({}, config, options);
+  const opt = Object.assign({}, config, options);
   canvas.config = opt;
-  let gridWidth = opt.gridWidth;
+  const gridWidth = opt.gridWidth;
   canvas.innerWidth = gridWidth * (data.x.length + 1); // the width of the grids
   canvas.innerHeight = gridWidth * (data.y.length + 1); // the height of the grids
   // the size of the grids plus margins, practically it will be the size of the canvas element
-  let w = canvas.innerWidth + opt.margin.left + opt.margin.right;
-  let h = canvas.innerHeight + opt.margin.top + opt.margin.bottom;
-  let ctx = initializeCanvas(canvas, {width: w, height: h});
+  const w = canvas.innerWidth + opt.margin.left + opt.margin.right;
+  const h = canvas.innerHeight + opt.margin.top + opt.margin.bottom;
+  const ctx = initializeCanvas(canvas, {width: w, height: h});
 
   ctx.data = data;
   ctx.selectedTypes = [...(new Set(Object.values(data.data).map(d => d.type)))].filter(d => d).sort();
@@ -55,10 +55,10 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
   });
 
   canvas.addEventListener('click', evt => {
-    let rect = canvas.getBoundingClientRect();
-    let data = ctx.data;
-    let [m, n] = getIndexes(canvas.config, canvas.innerWidth, canvas.innerHeight, {x: evt.x - rect.left, y: evt.y - rect.top});
-    let obj = data.data[`${data.x[m]}-${data.y[n]}`];
+    const rect = canvas.getBoundingClientRect();
+    const data = ctx.data;
+    const [m, n] = getIndexes(canvas.config, canvas.innerWidth, canvas.innerHeight, {x: evt.x - rect.left, y: evt.y - rect.top});
+    const obj = data.data[`${data.x[m]}-${data.y[n]}`];
     if (obj && obj.value && ctx.selectedTypes.includes(obj.type)) {
       requestAnimationFrame(() => {
         updateContactMap(ctx, {
@@ -114,25 +114,25 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
  * @param required: if true, update the canvas even if highlighted status not change
  */
 function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
-  let w = ctx.canvas.innerWidth;
-  let h = ctx.canvas.innerHeight;
-  let rect = ctx.canvas.getBoundingClientRect();
+  const w = ctx.canvas.innerWidth;
+  const h = ctx.canvas.innerHeight;
+  const rect = ctx.canvas.getBoundingClientRect();
 
-  let [p, q] = ctx.highlighted;
-  let [m, n] = getIndexes(ctx.canvas.config, w, h, {x: pos.x - rect.left, y: pos.y - rect.top});
+  const [p, q] = ctx.highlighted;
+  const [m, n] = getIndexes(ctx.canvas.config, w, h, {x: pos.x - rect.left, y: pos.y - rect.top});
   ctx.highlighted = [m, n];
 
   if (p === m && q === n && !required) {
     return;
   }
 
-  let data = ctx.data;
-  let opt = ctx.canvas.config;
-  let gridWidth = opt.gridWidth;
-  let obj = data.data[`${data.x[m]}-${data.y[n]}`]; // if m or n is -1 or both are -1 then obj will be undefined
+  const data = ctx.data;
+  const opt = ctx.canvas.config;
+  const gridWidth = opt.gridWidth;
+  const obj = data.data[`${data.x[m]}-${data.y[n]}`]; // if m or n is -1 or both are -1 then obj will be undefined
   // flag determines whether to light up a circle
   // the first conditional is obj itself, true only if both m and n are valid indexes and that x[m] and y[n] interacts
-  let flag = obj && obj.value && ctx.selectedTypes.includes(obj.type);
+  const flag = obj && obj.value && ctx.selectedTypes.includes(obj.type);
 
   ctx.save();
   // ctx.clearRect(0, 0, ctx.w, ctx.h);
@@ -192,7 +192,7 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   for (let i = 0; i < data.x.length; i++) {
     for (let j = 0; j < data.y.length; j++) {
       // we need to consider the current object, not the one used to determine whether to light up
-      let o = data.data[`${data.x[i]}-${data.y[j]}`];
+      const o = data.data[`${data.x[i]}-${data.y[j]}`];
       if (ctx.selectedTypes.includes(o.type) && o.value) {
         if (flag && i === m && j === n) {
           ctx.fillStyle = colors.getColor(o.type, 1);
@@ -221,10 +221,10 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
  * @returns {(number|*)[]}
  */
 function getIndexes(opt, w, h, pos) {
-  let x = pos.x - opt.margin.left;
-  let y = pos.y - opt.margin.top;
-  let m = getIndex(x, w, opt.gridWidth, opt.circleRadius);
-  let n = getIndex(y, h, opt.gridWidth, opt.circleRadius);
+  const x = pos.x - opt.margin.left;
+  const y = pos.y - opt.margin.top;
+  const m = getIndex(x, w, opt.gridWidth, opt.circleRadius);
+  const n = getIndex(y, h, opt.gridWidth, opt.circleRadius);
 
   return [m, n];
 }
@@ -233,8 +233,8 @@ function getIndex(d, max, unit, r) {
   if (d < (unit - r) || d > (max - unit + r)) {
     return -1;
   }
-  let x1 = d - d % unit;
-  let x2 = x1 + unit;
+  const x1 = d - d % unit;
+  const x2 = x1 + unit;
   if (d - x1 < r) {
     return x1 / unit - 1;
   }
@@ -247,8 +247,8 @@ function getIndex(d, max, unit, r) {
 function updateInfoPanel(panel, obj, pos = {top: 0, left: 0}) {
   panel.style.top = `${pos.top}px`;
   panel.style.left = `${pos.left}px`;
-  let spans = panel.getElementsByClassName('value');
-  let values = [obj.x, obj.y, obj.type, obj.value];
+  const spans = panel.getElementsByClassName('value');
+  const values = [obj.x, obj.y, obj.type, obj.value];
   let i = 0;
   for (let span of spans) {
     span.innerText = `${values[i++]}`;
